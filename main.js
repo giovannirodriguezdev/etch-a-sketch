@@ -1,12 +1,36 @@
-const container = document.getElementById('container');
+const gridContainer = document.getElementById('grid-container');
+const resetButton = document.getElementById('reset-button');
+let isBlack = true;
 
-function makeRows(rows, cols) {
-    container.style.setProperty('--grid-rows', rows);
-    container.style.setProperty('--grid-cols', cols);
-    for (c = 0; c < (rows * cols); c++) {
-        let cell = document.createElement('div');
-        // cell.innerText = (c + 1);
-        container.appendChild(cell).className = 'grid-item';
+// Create the grid
+function createGrid() {
+    for (let i = 0; i < 16; i++) {
+        for (let j = 0; j < 16; j++) {
+            const square = document.createElement('div');
+            square.classList.add('square');
+
+            // Add event listener for hover effect
+            square.addEventListener('mouseover', function () {
+                if (isBlack) {
+                    square.style.backgroundColor = 'black';
+                } else {
+                    square.style.backgroundColor = 'olive';
+                }
+                isBlack = !isBlack;
+            });
+
+            gridContainer.appendChild(square);
+        }
     }
 }
-makeRows(16, 16);
+// Clear the grid
+function clearGrid() {
+    gridContainer.innerHTML = '';
+    createGrid();
+}
+
+// Add event listener to the reset button
+resetButton.addEventListener('click', clearGrid);
+
+// Initialize the grid
+createGrid();

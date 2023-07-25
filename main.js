@@ -1,36 +1,91 @@
-const gridContainer = document.getElementById('grid-container');
-const resetButton = document.getElementById('reset-button');
-let isBlack = true;
+const grid = document.querySelector('.grid');
 
-// Create the grid
-function createGrid() {
-    for (let i = 0; i < 16; i++) {
-        for (let j = 0; j < 16; j++) {
-            const square = document.createElement('div');
-            square.classList.add('square');
+createGrid = () => {
+for (let i = 0; i < 256; i++) {
+    const div = document.createElement('div');
+    div.classList.add('cell');
+    div.addEventListener('mouseenter', function(event) {
+        event.target.style.backgroundColor = 'black';
+    })
+    grid.appendChild(div); 
+}
+};
 
-            // Add event listener for hover effect
-            square.addEventListener('mouseover', function () {
-                if (isBlack) {
-                    square.style.backgroundColor = 'black';
-                } else {
-                    square.style.backgroundColor = 'olive';
-                }
-                isBlack = !isBlack;
-            });
-
-            gridContainer.appendChild(square);
-        }
+function removeAllChildNodes(parent){
+    while(parent.firstChild){
+        parent.removeChild(parent.firstChild);
     }
 }
-// Clear the grid
-function clearGrid() {
-    gridContainer.innerHTML = '';
-    createGrid();
+
+function getRandomColor(){
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
 }
 
-// Add event listener to the reset button
-resetButton.addEventListener('click', clearGrid);
+const slider = document.querySelector('#slider')
+const screenVal = document.querySelector('.value');
+slider.addEventListener('input', function(){
+    let val = document.getElementById('slider').value;
+    screenVal.textContent = val;
+    removeAllChildNodes(grid);
+    grid.setAttribute('style', `grid-template-columns: repeat(${val}, 2fr); grid-template-rows: repeat(${val}, 2fr);`);
+    for (let i = 0; i < val*val; i++) {
+        const div = document.createElement('div');
+        div.classList.add('cell');
+        div.addEventListener('mouseover', function(event){
+            event.target.style.backgroundColor = 'black';
+        })
+        grid.appendChild(div); 
+    }
+});
 
-// Initialize the grid
+const reset = document.querySelector('#reset');
+reset.addEventListener('click', function(){
+    let val = document.getElementById('slider').value;
+    let cell = grid.children;
+    for (let i = 0; i < val*val; i++) {
+        cell[i].style.backgroundColor = 'white';
+    }
+});
+
+const rgb = document.querySelector('#rgb');
+rgb.addEventListener('click', function(){
+    let val = document.getElementById('slider').value;
+    let cell = grid.children;
+    for (let i = 0; i < val*val; i++) {
+        cell[i].addEventListener('mouseover', function(event){
+            event.target.style.backgroundColor = getRandomColor();
+        })
+    }
+});
+
+const black = document.querySelector('#black');
+black.addEventListener('click', function(){
+    let val = document.getElementById('slider').value;
+    let cell = grid.children;
+    for (let i = 0; i < val*val; i++) {
+        cell[i].addEventListener('mouseover', function(event){
+            event.target.style.backgroundColor = 'black';
+        })
+    }
+});
+
+const chooseColor = document.querySelector('#color');
+chooseColor.addEventListener('input', function(){
+    let val = document.getElementById('slider').value;
+    let newColor = document.getElementById('color').value;
+    let cell = grid.children;
+    for (let i = 0; i < val*val; i++) {
+        cell[i].addEventListener('mouseover', function(event){
+            event.target.style.backgroundColor = newColor;
+        })
+    }
+});
+
+
+
 createGrid();

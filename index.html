@@ -4,17 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch A Sketch</title>
+    
     <link rel="stylesheet" href="main.css">
+    <!-- minify -->
+    <link href="https://unpkg.com/nes.css@2.3.0/css/nes.min.css" rel="stylesheet" />
+    <!-- latest -->
+    <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+    <!-- core style only -->
+    <link href="https://unpkg.com/nes.css/css/nes-core.min.css" rel="stylesheet" />
+    <!-- fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 <body>
     <div>
         <h1>Etch A Sketch</h1>
     </div>
 
-    <div id="grid-container"></div>
-
-    <div class="btn">
-        <button id="reset-button">RESET</button>
+    <div class="container">
+        <div class="btns">
+            <button id="reset">Reset</button>
+            <button id="black">Black</button>
+            <button id="rgb">RGB</button>
+            <div class="colorAndPrompt">
+                <input type="color" id="color">
+                <p id="pickColor">choose a color</p>
+            </div>
+            <div class="sliderAndValue">
+                <input type="range" min="2" max="100" value="16" id="slider">
+                <p class="value">16</p>
+            </div>
+        </div>
+        
+        <div class="grid"></div>
     </div>
 
     <script src="main.js"></script>
